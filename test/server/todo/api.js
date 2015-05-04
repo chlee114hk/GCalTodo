@@ -2,8 +2,7 @@
 
 var should = require('should'),
     app = require('../../../server'),
-    mongoose = require('mongoose'),
-    Todo = mongoose.model('Todo'),
+    Todo = require('../../../client/scripts/modules/todo'),
     request = require('supertest');
 
 describe('GET /api/todos', function() {
@@ -27,7 +26,7 @@ describe('POST /api/todos', function() {
     request(app)
       .post('/api/todos')
       .send({
-        title: 'todoTitle',
+        name: 'todoTitle',
         completed: false
       })
       .expect(200)
@@ -36,7 +35,7 @@ describe('POST /api/todos', function() {
   });
 
   afterEach(function(done) {
-    Todo.remove().exec();
+    Todo.remove();
     done();
   });
 });
@@ -47,7 +46,7 @@ describe('PUT /api/todos/:todoId', function() {
 
   beforeEach(function(done) {
     todo = new Todo({
-      title: 'todoTitle',
+      name: 'todoTitle',
       completed: false
     });
 
@@ -57,7 +56,7 @@ describe('PUT /api/todos/:todoId', function() {
   });
 
   afterEach(function(done) {
-    Todo.remove().exec();
+    Todo.remove();
     done();
   });
 
@@ -65,7 +64,7 @@ describe('PUT /api/todos/:todoId', function() {
     return request(app)
       .put('/api/todos/' + todo._id)
       .send({
-        title: updatedName,
+        name: updatedName,
         completed: false
       });
   }
@@ -81,7 +80,7 @@ describe('PUT /api/todos/:todoId', function() {
     sendRequest()
       .end(function() {
         Todo.findById(todo._id, function(err, updatedTodo) {
-          updatedTodo.title.should.equal(updatedName);
+          updatedTodo.name.should.equal(updatedName);
           done();
         });
       });
@@ -93,7 +92,7 @@ describe('DEL /api/todos/:todoId', function() {
 
   beforeEach(function(done) {
     todo = new Todo({
-      title: 'todoTitle',
+      name: 'todoTitle',
       completed: false
     });
 
@@ -103,7 +102,7 @@ describe('DEL /api/todos/:todoId', function() {
   });
 
   afterEach(function(done) {
-    Todo.remove().exec();
+    Todo.remove();
     done();
   });
 
@@ -117,7 +116,7 @@ describe('DEL /api/todos/:todoId', function() {
       .expect(200).end(done);
   });
 
-  it('should delete the todo from the database', function(done) {
+  it('should delete the todo', function(done) {
     sendRequest()
       .expect(200).end(function() {
         Todo.find({}, function(err, todos) {
