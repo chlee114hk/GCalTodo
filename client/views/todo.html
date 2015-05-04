@@ -1,0 +1,50 @@
+<div class="container" ng-controller="TodoController as TodoCtrl">
+	<div class="row">
+		<div class="col-xs-6">
+			<div class="row">
+				<div class="col-xs-7">
+					<div class="input-group">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+						</span>
+						<input type="search" class="form-control" placeholder="Search" ng-model="todoSearch">
+					</div>
+				</div>
+				<div class="col-xs-7">
+					<ul class="nav nav-pills todo-filter">
+						<li ng-class="{'active' : show == 'All' }" ng-click="show='All'"><a href="#">All</a></li>
+						<li ng-class="{'active' : show == 'Incomplete' }" ng-click="show='Incomplete'"><a href="#">Incomplete</a></li>
+						<li ng-class="{'active' : show == 'Complete' }" ng-click="show='Complete'"><a href="#">Complete</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="row" id="todoAdd">
+				<div class="form-group">
+					<input class="todoNameField" id="newTodoNameField" type="text" ng-model="newTodoName" placeholder="Todo Name" required>
+					<input class="todoDateField" id="newTodoDateField" type="text" ng-model="newTodoDate" placeholder="Date(YYYY-MM-DD)" required>
+					<button id="todoSubmit" class="btn btn-default" ng-click="add()">Add</button>
+					<div>
+						<textarea class="todoDescriptionField" id="newTodoDescriptionField" ng-model="newTodoDescription" rows="1" cols="45" placeholder="Description"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<ul class="todoList">
+					<li class="todoTask" ng-repeat="todo in todos | filter:showFn | filter:todoSearch " ng-click="getDetails($index)" ng-class="{'active': todo.id == selected}">
+						<input class="todoCheckbox" ng-model="todo.completed" type="checkbox" ng-click="update($index)">
+						<label class="todoCheckboxlabel" ></label>
+						<label>{{todo.name}}</label>
+						<button type="button" class="close pull-right" aria-hidden="true" ng-click="delete($index)">&times;</button>
+                        <label class="todoDate">{{todo.date | date:"yyyy-MM-dd"}}</label>
+					</li>
+				</ul>
+			</div>
+			<div ng-show="details != null">
+				<div>Created At: {{details.created | date:"yyyy-MM-dd @ h:mma" }}</div>
+				<div>Created By: {{details.creator.displayName }}</div>
+				<div ng-show="details.description.length > 0">Description: {{details.description }}</div>
+			</div>
+		</div>
+	</div>
+<div>
+<script src="../js/common.js"></script>

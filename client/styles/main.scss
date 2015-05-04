@@ -1,0 +1,56 @@
+body {
+	background: #E9E9E9;
+	font-family: 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+a {
+	color: #EA9999;
+	text-decoration: none;
+	font-weight: bold;
+	&:hover {
+		color: #000;
+		text-decoration: underline;
+	}
+}
+
+#content {
+	margin-top: 75px;
+}
+
+.well{
+	max-width: 330px;
+	margin: 0 auto;
+}
+
+.todoList {
+	list-style: outside none none;
+	margin: 0;
+	padding: 0;
+	li {
+		padding: 5px 10px;
+		border-bottom: 1px dotted #ccc;
+		line-height: 25px;
+		&.active {
+			background-color: grey;
+		}
+		.todoDate {
+			float: right;
+			padding-right: 10px;
+		}
+		button {
+			line-height: 25px;
+		}
+	}
+}
+
+.form-group {
+	.todoNameField {
+		width: 350px;
+	}
+	.todoDateField {
+		width: 150px;
+	}
+	.todoDescriptionField {
+		width: 500px;
+	}
+}
