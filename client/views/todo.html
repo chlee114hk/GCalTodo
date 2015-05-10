@@ -21,7 +21,7 @@
 			<div class="row" id="todoAdd">
 				<div class="form-group">
 					<input class="todoNameField" id="newTodoNameField" type="text" ng-model="newTodoName" placeholder="Todo Name" required>
-					<input class="todoDateField" id="newTodoDateField" type="text" ng-model="newTodoDate" placeholder="Date(YYYY-MM-DD)" required>
+					<input class="todoDateField" id="newTodoDateField" type="text" ng-model="newTodoDate" placeholder="Date(YYYY-MM-DD)" datepicker required>
 					<button id="todoSubmit" class="btn btn-default" ng-click="add()">Add</button>
 					<div>
 						<textarea class="todoDescriptionField" id="newTodoDescriptionField" ng-model="newTodoDescription" rows="1" cols="45" placeholder="Description"></textarea>
@@ -34,7 +34,7 @@
 						<input class="todoCheckbox" ng-model="todo.completed" type="checkbox" ng-click="update($index)">
 						<label class="todoCheckboxlabel" ></label>
 						<label>{{todo.name}}</label>
-						<button type="button" class="close pull-right" aria-hidden="true" ng-click="delete($index)">&times;</button>
+						<button type="button" class="close pull-right" aria-hidden="true" ng-click="delete($index, $event)">&times;</button>
                         <label class="todoDate">{{todo.date | date:"yyyy-MM-dd"}}</label>
 					</li>
 				</ul>

@@ -56,26 +56,17 @@ gulp.task('browserify', function() {
 });
 
 // Vendor task
-/*
 gulp.task('vendor', function() {
-	var bundleStream = browserify()
-		.require(require.resolve('./node_modules/jquery/dist/jquery.js'), { expose: 'jquery' })
-		.require(require.resolve('./node_modules/jquery-ui/jquery-ui.js'))
-		.bundle().pipe(source('libs.js'));
-	return bundleStream.pipe(gulp.dest('./public/js'));
-});
-*/
-gulp.task('vendor', function() {
-	var bundleStream = browserify()
-	.require(require.resolve('./client/scripts/common/common.js'))
-	.bundle().pipe(source('common.js'));
-	return bundleStream.pipe(gulp.dest('./public/js'));
+	gulp.src('node_modules/bootstrap/dist/**/*')
+			.pipe(gulp.dest('public/vendor/bootstrap/'));
+	gulp.src('node_modules/jquery-ui/themes/dot-luv/**/*')
+			.pipe(gulp.dest('public/vendor/jquery-ui/'))
 });
 
 // Views task
 gulp.task('views', function() {
   // Get our index.html
-  gulp.src('client/index.html')
+  gulp.src(['client/index.html','client/favicon.ico','client/favicon_animated.ico'])
   // And put it in the public folder
   .pipe(gulp.dest('public/'));
   // Any other view files from client/views

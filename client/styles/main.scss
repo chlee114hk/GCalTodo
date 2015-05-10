@@ -45,7 +45,7 @@ a {
 
 .form-group {
 	.todoNameField {
-		width: 350px;
+		width: 320px;
 	}
 	.todoDateField {
 		width: 150px;
@@ -53,4 +53,40 @@ a {
 	.todoDescriptionField {
 		width: 500px;
 	}
+}
+
+.navbar-login
+{
+    width: 280px;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+.navbar-login-session
+{
+    padding: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.user-icon{
+		width: 50px;
+}
+
+.user-small-icon{
+		width: 30px;
+		padding: 0 5px;
+}
+
+.navbar{
+		padding: 0 15px;
+}
+
+.navbar-collapse{
+		padding: 0 15px !important; 
+}
+
+.icon-size
+{
+    font-size: 87px;
 }

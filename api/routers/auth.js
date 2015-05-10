@@ -51,7 +51,7 @@ router.get('/google/callback', function(req, res, next) {
         req.session.accessToken = _accessToken;
         req.session.calendarId = profile._json.email;
 
-        res.cookie('profile', profile);
+        res.cookie('profile', profile._json);
 
         res.redirect('/');
     })(req, res, next);

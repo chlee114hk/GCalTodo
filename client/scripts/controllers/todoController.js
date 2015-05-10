@@ -1,12 +1,28 @@
 'use strict';
 
-module.exports = function TodoController ($scope, Todos) {
+module.exports = function TodoController ($scope, Todos, $cookies, Auth) {
 	$scope.editing = [];
 	$scope.show = "All";
-	$scope.todos = Todos.query();
+	$scope.todos = Todos.query(
+		function(data) {
+			//success callback
+		},
+		function(data) {
+			if (data && data.status == 401 && data.statusText == "Unauthorized") {
+				console.log(data.data);
+				$scope.todos = [];
+			}
+		}
+	);
 	
 	$scope.getDetails = function(index, event) {
+		console.log($cookies, Auth)
 		var todo = $scope.todos[index];
+		if ($scope.selected == todo.id) {
+			$scope.selected = null;
+			$scope.details = null;
+			return;
+		}
 		Todos.get({ id: todo.id }, function(data) {
 			$scope.selected = todo.id;
 			$scope.details = data;
@@ -14,7 +30,19 @@ module.exports = function TodoController ($scope, Todos) {
 	};
 
 	$scope.add = function(){
-		if(!$scope.newTodoName || $scope.newTodoName.length < 1) return;
+		if (!$scope.newTodoName || $scope.newTodoName.length < 1) {
+			alert("Please enter Todo Name!");
+			return;
+		}
+		if (!$scope.newTodoDate || $scope.newTodoDate.length < 1) {
+			alert("Please select date for Todo!");
+			return;
+		}
+		if (!Date.parse($scope.newTodoDate, "yy-mm-dd")) {
+			alert("Wrong date format!");
+			return;
+		}
+		
 		var todo = new Todos({ 
 			name: $scope.newTodoName, 
 			date: $scope.newTodoDate,
@@ -28,6 +56,7 @@ module.exports = function TodoController ($scope, Todos) {
 			// clear textbox
 			$scope.newTodoName = ''; 
 			$scope.newTodoDescription = '';
+			$scope.newTodoDate = '';
 		});
 	};
 
@@ -46,10 +75,15 @@ module.exports = function TodoController ($scope, Todos) {
 		$scope.editing[index] = false;
 	};
 
-	$scope.delete = function(index){
+	$scope.delete = function(index, event){
+		event.stopImmediatePropagation();
 		var todo = $scope.todos[index];
 		Todos.remove({id: todo.id}, function(){
 			$scope.todos.splice(index, 1);
+			if ($scope.selected == todo.id) {
+				$scope.selected = null;
+				$scope.details = null;
+			}
 		});
 	};
 	

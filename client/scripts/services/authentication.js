@@ -11,7 +11,7 @@ module.exports =
 			isAuthenticated: function() {
 				var user = $cookies.profile;
 
-				if(user) {
+				if(user && user != "null") {
 					return true;
 				}
 
@@ -19,10 +19,9 @@ module.exports =
 			},
 			getUser: function() {
 				var user = $cookies.profile;
-				var jsonStr = user.match(/"_json":{(.*)[}]{1}/g) || [];
-				if (jsonStr.length) {
-					console.log(jsonStr[0])
-					//user = JSON.parse(jsonStr[0])
+				if (user && user != 'null' && user.length) {
+					var jsonStr = user.match(/{(.*)}/g) || [];
+					user = JSON.parse(jsonStr[0]);
 				}
 				return user;
 			},
@@ -53,10 +52,10 @@ module.exports =
 	}])
 
 	.controller('LoginController', ['$scope','$log','$timeout','$window', 'Auth', '$location', function($scope, $log, $timeout, $window, Auth, $location) {
-		//$scope.user = Auth.getUser();
+		$scope.user = Auth.getUser();
 
 		$scope.go = function ( path ) {
-		    window.location.href = path;
+		  window.location.href = path;
 		};
 		
 		$scope.isLogin = function() {
@@ -64,7 +63,6 @@ module.exports =
 		};
 		
 		$scope.logout = function() {
-			console.log($scope.user)
 			Auth.logout();
 		};
 
