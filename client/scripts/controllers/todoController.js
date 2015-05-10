@@ -9,7 +9,6 @@ module.exports = function TodoController ($scope, Todos, $cookies, Auth) {
 		},
 		function(data) {
 			if (data && data.status == 401 && data.statusText == "Unauthorized") {
-				console.log(data.data);
 				$scope.todos = [];
 			}
 		}
